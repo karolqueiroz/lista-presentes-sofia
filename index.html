@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 15 Anos da Sofia - Lista de Presentes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff6b9d;
+            --secondary: #ffc6d9;
+            --accent: #c44569;
+            --gold: #ffd700;
+            --bg: #fff5f8;
+            --card-bg: #ffffff;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --shadow: rgba(255, 107, 157, 0.15);
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, #ffe6f0 100%);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.1) 0%, transparent 70%);
+            animation: float 20s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(5deg); }
+            66% { transform: translate(-20px, 20px) rotate(-5deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '✨';
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.1;
+            top: -20px;
+            left: -20px;
+            animation: sparkle 3s infinite;
+        }
+
+        header::after {
+            content: '🎂';
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.1;
+            bottom: -20px;
+            right: -20px;
+            animation: sparkle 3s infinite 1.5s;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.1; }
+            50% { transform: scale(1.2) rotate(10deg); opacity: 0.2; }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            color: white;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-weight: 300;
+            opacity: 0.95;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+            color: white;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .controls {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px var(--shadow);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--primary);
+            background: white;
+            color: var(--primary);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .filter-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid var(--secondary);
+            border-radius: 25px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .gifts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .gift-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 5px 20px var(--shadow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gift-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .gift-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+
+        .gift-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .gift-card.selected {
+            background: linear-gradient(135deg, var(--secondary) 0%, #fff 100%);
+            border: 2px solid var(--primary);
+        }
+
+        .gift-card.selected::before {
+            transform: scaleX(1);
+            height: 100%;
+            opacity: 0.1;
+        }
+
+        .gift-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .gift-number {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(255, 107, 157, 0.3);
+        }
+
+        .gift-category {
+            background: var(--secondary);
+            color: var(--accent);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .gift-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .gift-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--secondary);
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-available {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-selected {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .btn-select {
+            margin-left: auto;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .btn-select:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+        }
+
+        .gift-card.selected .btn-select {
+            background: #95a5a6;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 40px;
+            border-radius: 30px;
+            position: relative;
+            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .modal h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--secondary);
+            border-radius: 15px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .btn-confirm {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Quicksand', sans-serif;
+            margin-top: 20px;
+        }
+
+        .btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 157, 0.4);
+        }
+
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            margin: 25px 0;
+            padding: 20px;
+            background: var(--bg);
+            border-radius: 20px;
+        }
+
+        .share-text {
+            background: var(--bg);
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        .emoji {
+            font-size: 1.5rem;
+            margin: 0 5px;
+        }
+
+        @media (max-width: 768px) {
+            .gifts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .filter-group {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .modal-content {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+        }
+
+        .legend {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 20px;
+            margin-top: 30px;
+            box-shadow: 0 5px 20px var(--shadow);
+            text-align: center;
+        }
+
+        .legend h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .legend-items {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .category-colors {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .category-color {
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎉 15 Anos da Sofia 🎉</h1>
+            <p class="subtitle">✨ Escolha o presente perfeito ✨</p>
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number" id="totalGifts">35</span>
+                    <span class="stat-label">Presentes</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" id="selectedCount">0</span>
+                    <span class="stat-label">Selecionados</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" id="availableCount">35</span>
+                    <span class="stat-label">Disponíveis</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="controls">
+            <div class="filter-group">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="simbolicos">💎 Simbólicos</button>
+                <button class="filter-btn" data-filter="beleza">✨ Beleza</button>
+                <button class="filter-btn" data-filter="tecnologia">📱 Tech</button>
+                <button class="filter-btn" data-filter="decoracao">🧸 Decoração</button>
+                <button class="filter-btn" data-filter="criativas">🎨 Criativos</button>
+                <button class="filter-btn" data-filter="experiencias">🎉 Experiências</button>
+                <button class="filter-btn" data-filter="personalizados">❤️ Personalizados</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar presente...">
+            </div>
+        </div>
+
+        <div class="gifts-grid" id="giftsGrid"></div>
+
+        <div class="legend">
+            <h3>📋 Como funciona?</h3>
+            <p>Clique em qualquer presente para reservá-lo! Você receberá um QR Code para compartilhar.</p>
+            <div class="category-colors">
+                <span class="category-color" style="background: #ffebee; color: #c62828;">💎 Simbólicos</span>
+                <span class="category-color" style="background: #f3e5f5; color: #6a1b9a;">✨ Beleza</span>
+                <span class="category-color" style="background: #e3f2fd; color: #1565c0;">📱 Tech</span>
+                <span class="category-color" style="background: #fff3e0; color: #e65100;">🧸 Decoração</span>
+                <span class="category-color" style="background: #e8f5e9; color: #2e7d32;">🎨 Criativos</span>
+                <span class="category-color" style="background: #fce4ec; color: #c2185b;">🎉 Experiências</span>
+                <span class="category-color" style="background: #ede7f6; color: #4527a0;">❤️ Personalizados</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="giftModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🎁 Reservar Presente</h2>
+            <p id="modalGiftName" style="font-size: 1.2rem; margin-bottom: 20px; color: var(--text-light);"></p>
+            
+            <div class="form-group">
+                <label>Seu nome:</label>
+                <input type="text" id="guestName" placeholder="Digite seu nome">
+            </div>
+            
+            <div class="form-group">
+                <label>Mensagem para Sofia (opcional):</label>
+                <input type="text" id="guestMessage" placeholder="Uma mensagem especial...">
+            </div>
+            
+            <button class="btn-confirm" onclick="confirmGift()">Confirmar Reserva</button>
+            
+            <div id="qrcodeContainer" style="display: none;">
+                <div id="qrcode"></div>
+                <div class="share-text">
+                    <strong>✨ Presente reservado com sucesso! ✨</strong><br>
+                    Compartilhe este QR Code ou salve a imagem<br>
+                    <span class="emoji">💝</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const gifts = [
+            // Simbólicos
+            { id: 1, name: "Anel solitário em prata", category: "simbolicos", emoji: "💍" },
+            { id: 2, name: "Colar com inicial ou nome", category: "simbolicos", emoji: "📿" },
+            { id: 3, name: "Pulseira com pingente", category: "simbolicos", emoji: "⛓️" },
+            { id: 4, name: "Relógio feminino delicado", category: "simbolicos", emoji: "⌚" },
+            { id: 5, name: "Jóia personalizada (nome/data gravada)", category: "simbolicos", emoji: "💎" },
+            
+            // Beleza
+            { id: 6, name: "Perfume (212 VIP Rosé, La Vie Est Belle, Egeo)", category: "beleza", emoji: "🌸" },
+            { id: 7, name: "Kit de skincare completo", category: "beleza", emoji: "🧴" },
+            { id: 8, name: "Kit de maquiagem iniciante", category: "beleza", emoji: "💄" },
+            { id: 9, name: "Escova secadora / modeladora", category: "beleza", emoji: "💇" },
+            { id: 10, name: "Nécessaire personalizada com produtos", category: "beleza", emoji: "👝" },
+            
+            // Tecnologia
+            { id: 11, name: "Fones Bluetooth (tipo AirPods)", category: "tecnologia", emoji: "🎧" },
+            { id: 12, name: "Caixa de som portátil", category: "tecnologia", emoji: "🔊" },
+            { id: 13, name: "Capinha de celular personalizada", category: "tecnologia", emoji: "📱" },
+            { id: 14, name: "Carregador portátil (powerbank)", category: "tecnologia", emoji: "🔋" },
+            { id: 15, name: "Anel/led para selfies", category: "tecnologia", emoji: "💡" },
+            
+            // Decoração
+            { id: 16, name: "Luminária fofa (capivara, nuvem, lua, LED)", category: "decoracao", emoji: "🌙" },
+            { id: 17, name: "Conjunto de pisca-pisca estilo Tumblr", category: "decoracao", emoji: "✨" },
+            { id: 18, name: "Painel de fotos com pregadores", category: "decoracao", emoji: "📸" },
+            { id: 19, name: "Almofada personalizada", category: "decoracao", emoji: "🛋️" },
+            { id: 20, name: "Velas aromáticas sofisticadas", category: "decoracao", emoji: "🕯️" },
+            
+            // Criativas
+            { id: 21, name: "Livro de mensagens para os 15 anos", category: "criativas", emoji: "📖" },
+            { id: 22, name: "Scrapbook com fotos e memórias", category: "criativas", emoji: "📔" },
+            { id: 23, name: "Pinte-e-beba / kit de pintura criativa", category: "criativas", emoji: "🎨" },
+            { id: 24, name: "Câmera instantânea (Instax)", category: "criativas", emoji: "📷" },
+            { id: 25, name: "Polaroid com álbum de fotos", category: "criativas", emoji: "🖼️" },
+            
+            // Experiências
+            { id: 26, name: "Dia de spa (em casa ou em salão)", category: "experiencias", emoji: "💆" },
+            { id: 27, name: "Aula especial (dança, música, fotografia)", category: "experiencias", emoji: "🎭" },
+            { id: 28, name: "Show, teatro ou cinema com amigas", category: "experiencias", emoji: "🎬" },
+            { id: 29, name: "Sessão de fotos profissional", category: "experiencias", emoji: "📸" },
+            { id: 30, name: "Passeio surpresa (parque, café, piquenique)", category: "experiencias", emoji: "🎡" },
+            
+            // Personalizados
+            { id: 31, name: "Caixa explosiva com fotos", category: "personalizados", emoji: "🎁" },
+            { id: 32, name: "Caixa surpresa com doces favoritos", category: "personalizados", emoji: "🍬" },
+            { id: 33, name: "Copo térmico com nome", category: "personalizados", emoji: "☕" },
+            { id: 34, name: "Planner personalizado 2026", category: "personalizados", emoji: "📅" },
+            { id: 35, name: "Camisa ou moletom com estampa especial", category: "personalizados", emoji: "👕" }
+        ];
+
+        let selectedGifts = JSON.parse(localStorage.getItem('selectedGifts') || '{}');
+        let currentGift = null;
+
+        function renderGifts(filter = 'all', search = '') {
+            const grid = document.getElementById('giftsGrid');
+            grid.innerHTML = '';
+            
+            let filtered = gifts.filter(gift => {
+                const matchesFilter = filter === 'all' || gift.category === filter;
+                const matchesSearch = gift.name.toLowerCase().includes(search.toLowerCase());
+                return matchesFilter && matchesSearch;
+            });
+
+            filtered.forEach(gift => {
+                const isSelected = selectedGifts[gift.id];
+                const card = document.createElement('div');
+                card.className = `gift-card ${isSelected ? 'selected' : ''}`;
+                card.innerHTML = `
+                    <div class="gift-header">
+                        <div class="gift-number">${gift.id}</div>
+                        <div class="gift-category">${gift.emoji} ${getCategoryName(gift.category)}</div>
+                    </div>
+                    <div class="gift-name">${gift.name}</div>
+                    <div class="gift-status">
+                        <span class="status-badge ${isSelected ? 'status-selected' : 'status-available'}">
+                            ${isSelected ? '🎉 Reservado por ' + selectedGifts[gift.id].name : '✓ Disponível'}
+                        </span>
+                        ${!isSelected ? '<button class="btn-select">Escolher</button>' : ''}
+                    </div>
+                `;
+                
+                if (!isSelected) {
+                    card.querySelector('.btn-select').onclick = (e) => {
+                        e.stopPropagation();
+                        openModal(gift);
+                    };
+                }
+                
+                grid.appendChild(card);
+            });
+
+            updateStats();
+        }
+
+        function getCategoryName(category) {
+            const names = {
+                'simbolicos': 'Simbólicos',
+                'beleza': 'Beleza',
+                'tecnologia': 'Tech',
+                'decoracao': 'Decoração',
+                'criativas': 'Criativos',
+                'experiencias': 'Experiências',
+                'personalizados': 'Personalizados'
+            };
+            return names[category] || category;
+        }
+
+        function updateStats() {
+            const selected = Object.keys(selectedGifts).length;
+            document.getElementById('selectedCount').textContent = selected;
+            document.getElementById('availableCount').textContent = 35 - selected;
+        }
+
+        function openModal(gift) {
+            currentGift = gift;
+            document.getElementById('modalGiftName').textContent = `${gift.emoji} ${gift.name}`;
+            document.getElementById('guestName').value = '';
+            document.getElementById('guestMessage').value = '';
+            document.getElementById('qrcodeContainer').style.display = 'none';
+            document.getElementById('qrcode').innerHTML = '';
+            document.getElementById('giftModal').style.display = 'block';
+        }
+
+        function confirmGift() {
+            const name = document.getElementById('guestName').value.trim();
+            const message = document.getElementById('guestMessage').value.trim();
+            
+            if (!name) {
+                alert('Por favor, digite seu nome!');
+                return;
+            }
+
+            selectedGifts[currentGift.id] = {
+                name: name,
+                message: message,
+                date: new Date().toISOString()
+            };
+            
+            localStorage.setItem('selectedGifts', JSON.stringify(selectedGifts));
+
+            // Gerar QR Code
+            const qrData = `Presente: ${currentGift.name}\nReservado por: ${name}\n${message ? 'Mensagem: ' + message : ''}\n🎉 15 Anos da Sofia`;
+            
+            document.getElementById('qrcode').innerHTML = '';
+            new QRCode(document.getElementById('qrcode'), {
+                text: qrData,
+                width: 200,
+                height: 200,
+                colorDark: '#ff6b9d',
+                colorLight: '#ffffff',
+            });
+
+            document.getElementById('qrcodeContainer').style.display = 'block';
+            
+            setTimeout(() => {
+                renderGifts();
+            }, 3000);
+        }
+
+        // Event Listeners
+        document.querySelector('.close').onclick = () => {
+            document.getElementById('giftModal').style.display = 'none';
+        };
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.onclick = () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderGifts(btn.dataset.filter, document.getElementById('searchInput').value);
+            };
+        });
+
+        document.getElementById('searchInput').oninput = (e) => {
+            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+            renderGifts(activeFilter, e.target.value);
+        };
+
+        window.onclick = (e) => {
+            if (e.target === document.getElementById('giftModal')) {
+                document.getElementById('giftModal').style.display = 'none';
+            }
+        };
+
+        // Inicializar
+        renderGifts();
+    </script>
+</body>
+</html>
