@@ -6,221 +6,73 @@
     <title>✨ 15 Anos da Sofia - Starry Night ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --navy: #1a2847;
-            --dark-blue: #243456;
-            --medium-blue: #2d4169;
-            --gold: #d4af37;
-            --light-gold: #f4e4b8;
-            --pale-gold: #fff8dc;
-            --card-bg: #1e2d4a;
-            --text: #ffffff;
-            --text-gold: #d4af37;
-            --shadow-gold: rgba(212, 175, 55, 0.3);
-            --shadow-blue: rgba(26, 40, 71, 0.5);
+            --navy: #1a2847; --dark-blue: #243456; --gold: #d4af37;
+            --light-gold: #f4e4b8; --shadow-gold: rgba(212, 175, 55, 0.3);
+            --shadow-blue: rgba(26, 40, 71, 0.5); --green: #4ade80;
         }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-
-        @keyframes shootingStar {
-            0% { transform: translateX(-100px) translateY(-100px); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateX(1000px) translateY(1000px); opacity: 0; }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
+        @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; transform: scale(1.2); } }
+        @keyframes shootingStar { 0% { transform: translateX(-100px) translateY(-100px); opacity: 0; } 10%, 90% { opacity: 1; } 100% { transform: translateX(1000px) translateY(1000px); opacity: 0; } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         body {
             font-family: 'Montserrat', sans-serif;
             background: linear-gradient(180deg, #0f1626 0%, var(--navy) 50%, var(--dark-blue) 100%);
-            color: var(--text);
-            min-height: 100vh;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
+            color: #fff; min-height: 100vh; padding: 20px; position: relative; overflow-x: hidden;
         }
-
-        /* Estrelas de fundo */
-        body::before,
-        body::after {
-            content: '';
-            position: fixed;
-            border-radius: 50%;
-            background: var(--gold);
-            animation: twinkle 3s infinite;
-            pointer-events: none;
-            z-index: 0;
+        body::before, body::after {
+            content: ''; position: fixed; border-radius: 50%; background: var(--gold);
+            animation: twinkle 3s infinite; pointer-events: none; z-index: 0;
         }
-
         body::before {
-            width: 3px;
-            height: 3px;
-            top: 20%;
-            left: 10%;
-            box-shadow: 
-                100px 100px 0 var(--gold),
-                200px 50px 0 var(--light-gold),
-                300px 150px 0 var(--gold),
-                400px 80px 0 var(--light-gold),
-                500px 200px 0 var(--gold),
-                600px 120px 0 var(--light-gold),
-                700px 180px 0 var(--gold),
-                150px 250px 0 var(--light-gold),
-                250px 300px 0 var(--gold),
-                350px 280px 0 var(--light-gold),
-                450px 350px 0 var(--gold),
-                550px 320px 0 var(--light-gold),
-                50px 400px 0 var(--gold),
-                150px 450px 0 var(--light-gold),
-                250px 420px 0 var(--gold),
-                350px 480px 0 var(--light-gold),
-                450px 440px 0 var(--gold),
-                550px 490px 0 var(--light-gold),
-                650px 460px 0 var(--gold);
-            animation-delay: 0s;
+            width: 3px; height: 3px; top: 20%; left: 10%;
+            box-shadow: 100px 100px 0 var(--gold), 200px 50px 0 var(--light-gold), 300px 150px 0 var(--gold), 400px 80px 0 var(--light-gold), 500px 200px 0 var(--gold), 600px 120px 0 var(--light-gold), 700px 180px 0 var(--gold), 150px 250px 0 var(--light-gold), 250px 300px 0 var(--gold), 350px 280px 0 var(--light-gold), 450px 350px 0 var(--gold), 550px 320px 0 var(--light-gold), 50px 400px 0 var(--gold), 150px 450px 0 var(--light-gold), 250px 420px 0 var(--gold), 350px 480px 0 var(--light-gold), 450px 440px 0 var(--gold), 550px 490px 0 var(--light-gold), 650px 460px 0 var(--gold);
         }
-
         body::after {
-            width: 2px;
-            height: 2px;
-            top: 30%;
-            right: 10%;
-            box-shadow: 
-                -100px 80px 0 var(--light-gold),
-                -200px 150px 0 var(--gold),
-                -300px 100px 0 var(--light-gold),
-                -400px 180px 0 var(--gold),
-                -150px 250px 0 var(--light-gold),
-                -250px 220px 0 var(--gold),
-                -350px 280px 0 var(--light-gold),
-                -100px 350px 0 var(--gold),
-                -200px 380px 0 var(--light-gold),
-                -300px 420px 0 var(--gold);
-            animation-delay: 1.5s;
+            width: 2px; height: 2px; top: 30%; right: 10%; animation-delay: 1.5s;
+            box-shadow: -100px 80px 0 var(--light-gold), -200px 150px 0 var(--gold), -300px 100px 0 var(--light-gold), -400px 180px 0 var(--gold), -150px 250px 0 var(--light-gold), -250px 220px 0 var(--gold), -350px 280px 0 var(--light-gold), -100px 350px 0 var(--gold), -200px 380px 0 var(--light-gold), -300px 420px 0 var(--gold);
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
+        .container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
         .shooting-star {
-            position: fixed;
-            width: 2px;
-            height: 2px;
-            background: var(--gold);
+            position: fixed; width: 2px; height: 2px; background: var(--gold);
             box-shadow: 0 0 10px var(--gold), 0 0 20px var(--light-gold);
-            animation: shootingStar 3s linear infinite;
-            opacity: 0;
-            z-index: 0;
+            animation: shootingStar 3s linear infinite; opacity: 0; z-index: 0;
         }
-
         .shooting-star::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100px;
-            height: 2px;
+            content: ''; position: absolute; top: 0; left: 0; width: 100px; height: 2px;
             background: linear-gradient(90deg, var(--gold), transparent);
         }
-
         header {
-            text-align: center;
-            padding: 60px 20px 40px;
-            background: linear-gradient(135deg, rgba(26, 40, 71, 0.9) 0%, rgba(36, 52, 86, 0.9) 100%);
-            border-radius: 30px;
-            margin-bottom: 40px;
-            box-shadow: 
-                0 20px 60px var(--shadow-blue),
-                inset 0 1px 0 rgba(212, 175, 55, 0.3);
-            position: relative;
-            overflow: hidden;
-            border: 2px solid rgba(212, 175, 55, 0.3);
+            text-align: center; padding: 60px 20px 40px;
+            background: linear-gradient(135deg, rgba(26, 40, 71, 0.9), rgba(36, 52, 86, 0.9));
+            border-radius: 30px; margin-bottom: 40px;
+            box-shadow: 0 20px 60px var(--shadow-blue), inset 0 1px 0 var(--shadow-gold);
+            border: 2px solid var(--shadow-gold);
         }
-
-        .stars-divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .star-icon {
-            color: var(--gold);
-            font-size: 1.5rem;
-            animation: twinkle 2s infinite;
-        }
-
+        .stars-divider { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 20px 0; }
+        .star-icon { color: var(--gold); font-size: 1.5rem; animation: twinkle 2s infinite; }
         .star-icon:nth-child(2) { animation-delay: 0.3s; }
         .star-icon:nth-child(3) { animation-delay: 0.6s; }
-
         h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            color: var(--gold);
-            margin-bottom: 15px;
-            text-shadow: 
-                0 0 20px rgba(212, 175, 55, 0.5),
-                0 0 40px rgba(212, 175, 55, 0.3);
-            font-weight: 700;
-            letter-spacing: 2px;
+            font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: var(--gold); margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5), 0 0 40px rgba(212, 175, 55, 0.3);
+            font-weight: 700; letter-spacing: 2px;
         }
-
         .subtitle {
-            color: var(--light-gold);
-            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-            font-weight: 300;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
+            color: var(--light-gold); font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            font-weight: 300; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px;
         }
-
         .theme-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-            color: var(--light-gold);
-            font-style: italic;
-            margin-top: 10px;
-            opacity: 0.9;
+            font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            color: var(--light-gold); font-style: italic; margin-top: 10px; opacity: 0.9;
         }
-
         .intro-text {
-            max-width: 700px;
-            margin: 30px auto 0;
-            color: var(--light-gold);
-            line-height: 1.8;
-            font-size: 1.1rem;
-            padding: 0 20px;
+            max-width: 700px; margin: 30px auto 0; color: var(--light-gold);
+            line-height: 1.8; font-size: 1.1rem; padding: 0 20px;
         }
-
-        .category-section {
-            margin-bottom: 50px;
-            animation: fadeIn 0.8s ease forwards;
-            opacity: 0;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        .category-section { margin-bottom: 50px; animation: fadeIn 0.8s ease forwards; opacity: 0; }
         .category-section:nth-child(1) { animation-delay: 0.1s; }
         .category-section:nth-child(2) { animation-delay: 0.2s; }
         .category-section:nth-child(3) { animation-delay: 0.3s; }
@@ -228,158 +80,126 @@
         .category-section:nth-child(5) { animation-delay: 0.5s; }
         .category-section:nth-child(6) { animation-delay: 0.6s; }
         .category-section:nth-child(7) { animation-delay: 0.7s; }
-
         .category-header {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(26, 40, 71, 0.8) 100%);
-            padding: 25px 30px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            border: 2px solid rgba(212, 175, 55, 0.3);
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 10px 30px var(--shadow-blue);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(26, 40, 71, 0.8));
+            padding: 25px 30px; border-radius: 20px; margin-bottom: 20px;
+            border: 2px solid var(--shadow-gold); backdrop-filter: blur(10px);
+            display: flex; align-items: center; gap: 15px; box-shadow: 0 10px 30px var(--shadow-blue);
         }
-
-        .category-icon {
-            font-size: 2.5rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
+        .category-icon { font-size: 2.5rem; animation: float 3s ease-in-out infinite; }
         .category-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.5rem, 3vw, 2rem);
-            color: var(--gold);
-            font-weight: 700;
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+            font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 3vw, 2rem);
+            color: var(--gold); font-weight: 700; text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
         }
-
         .gifts-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            padding: 0 10px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px; padding: 0 10px;
         }
-
         .gift-item {
-            background: linear-gradient(135deg, rgba(30, 45, 74, 0.9) 0%, rgba(26, 40, 71, 0.9) 100%);
-            border-radius: 15px;
-            padding: 20px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            background: linear-gradient(135deg, rgba(30, 45, 74, 0.9), rgba(26, 40, 71, 0.9));
+            border-radius: 15px; padding: 20px; border: 1px solid rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(10px); transition: all 0.3s ease; position: relative; overflow: hidden;
         }
-
+        .gift-item.reserved {
+            background: linear-gradient(135deg, rgba(30, 45, 74, 0.5), rgba(26, 40, 71, 0.5));
+            border-color: rgba(212, 175, 55, 0.1); opacity: 0.7;
+        }
         .gift-item::before {
-            content: '✨';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 1.5rem;
-            opacity: 0;
-            transition: all 0.3s ease;
+            content: '✨'; position: absolute; top: 10px; right: 10px;
+            font-size: 1.5rem; opacity: 0; transition: all 0.3s ease;
         }
-
-        .gift-item:hover {
+        .gift-item:not(.reserved):hover {
             transform: translateY(-5px);
-            box-shadow: 
-                0 10px 30px var(--shadow-blue),
-                0 0 20px var(--shadow-gold);
+            box-shadow: 0 10px 30px var(--shadow-blue), 0 0 20px var(--shadow-gold);
             border-color: var(--gold);
         }
-
-        .gift-item:hover::before {
-            opacity: 0.4;
-            transform: rotate(20deg);
-        }
-
+        .gift-item:not(.reserved):hover::before { opacity: 0.4; transform: rotate(20deg); }
         .gift-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 35px;
-            height: 35px;
-            background: linear-gradient(135deg, var(--gold), #b8941f);
-            color: var(--navy);
-            border-radius: 50%;
-            font-weight: 700;
-            font-size: 1rem;
-            margin-bottom: 12px;
-            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 35px; height: 35px; background: linear-gradient(135deg, var(--gold), #b8941f);
+            color: var(--navy); border-radius: 50%; font-weight: 700; font-size: 1rem;
+            margin-bottom: 12px; box-shadow: 0 4px 10px var(--shadow-gold);
         }
-
+        .gift-item.reserved .gift-number { background: linear-gradient(135deg, #6b7280, #4b5563); }
         .gift-name {
-            color: var(--light-gold);
-            font-size: 1.05rem;
-            line-height: 1.5;
-            font-weight: 500;
+            color: var(--light-gold); font-size: 1.05rem; line-height: 1.5;
+            font-weight: 500; margin-bottom: 15px;
         }
-
+        .gift-item.reserved .gift-name { text-decoration: line-through; opacity: 0.6; }
+        .gift-status {
+            display: flex; align-items: center; gap: 8px; margin-top: 12px;
+            padding: 8px 12px; background: rgba(212, 175, 55, 0.1);
+            border-radius: 8px; font-size: 0.9rem;
+        }
+        .gift-status.available { color: var(--green); }
+        .gift-status.reserved { color: var(--light-gold); background: rgba(255, 255, 255, 0.05); }
+        .reserve-btn {
+            width: 100%; padding: 12px; background: linear-gradient(135deg, var(--gold), #b8941f);
+            color: var(--navy); border: none; border-radius: 10px; font-weight: 600;
+            font-size: 1rem; cursor: pointer; transition: all 0.3s ease; margin-top: 12px;
+            box-shadow: 0 4px 10px var(--shadow-gold);
+        }
+        .reserve-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(212, 175, 55, 0.4); }
+        .reserved-by { font-size: 0.85rem; color: var(--light-gold); opacity: 0.8; margin-top: 8px; }
         .footer {
-            background: rgba(26, 40, 71, 0.8);
-            padding: 40px 30px;
-            border-radius: 20px;
-            margin-top: 50px;
-            text-align: center;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px var(--shadow-blue);
+            background: rgba(26, 40, 71, 0.8); padding: 40px 30px; border-radius: 20px;
+            margin-top: 50px; text-align: center; border: 1px solid var(--shadow-gold);
+            backdrop-filter: blur(10px); box-shadow: 0 10px 30px var(--shadow-blue);
         }
-
         .footer h3 {
-            font-family: 'Cormorant Garamond', serif;
-            color: var(--gold);
-            font-size: 2rem;
-            margin-bottom: 20px;
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+            font-family: 'Cormorant Garamond', serif; color: var(--gold);
+            font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
         }
-
-        .footer p {
-            color: var(--light-gold);
-            line-height: 1.8;
-            font-size: 1.1rem;
-            margin-bottom: 15px;
+        .footer p { color: var(--light-gold); line-height: 1.8; font-size: 1.1rem; margin-bottom: 15px; }
+        .footer-stars { margin-top: 30px; font-size: 2rem; letter-spacing: 10px; opacity: 0.6; }
+        .modal {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0;
+            width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px); animation: fadeIn 0.3s ease;
         }
-
-        .footer-stars {
-            margin-top: 30px;
-            font-size: 2rem;
-            letter-spacing: 10px;
-            opacity: 0.6;
+        .modal.active { display: flex; align-items: center; justify-content: center; }
+        .modal-content {
+            background: linear-gradient(135deg, rgba(30, 45, 74, 0.98), rgba(26, 40, 71, 0.98));
+            padding: 40px; border-radius: 20px; border: 2px solid var(--shadow-gold);
+            max-width: 500px; width: 90%; box-shadow: 0 20px 60px var(--shadow-blue);
         }
-
+        .modal-header { text-align: center; margin-bottom: 30px; }
+        .modal-header h2 {
+            font-family: 'Cormorant Garamond', serif; color: var(--gold);
+            font-size: 2rem; margin-bottom: 10px; text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+        .modal-header p { color: var(--light-gold); font-size: 1rem; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; color: var(--light-gold); margin-bottom: 8px; font-size: 0.95rem; }
+        .form-group input {
+            width: 100%; padding: 12px 15px; background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--shadow-gold); border-radius: 10px;
+            color: #fff; font-size: 1rem; transition: all 0.3s ease;
+        }
+        .form-group input:focus {
+            outline: none; border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+        }
+        .modal-buttons { display: flex; gap: 15px; margin-top: 30px; }
+        .modal-btn {
+            flex: 1; padding: 12px; border: none; border-radius: 10px;
+            font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;
+        }
+        .modal-btn.confirm {
+            background: linear-gradient(135deg, var(--gold), #b8941f);
+            color: var(--navy); box-shadow: 0 4px 10px var(--shadow-gold);
+        }
+        .modal-btn.confirm:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(212, 175, 55, 0.4); }
+        .modal-btn.cancel {
+            background: rgba(255, 255, 255, 0.1); color: var(--light-gold);
+            border: 1px solid var(--shadow-gold);
+        }
+        .modal-btn.cancel:hover { background: rgba(255, 255, 255, 0.15); }
         @media (max-width: 768px) {
-            .gifts-list {
-                grid-template-columns: 1fr;
-            }
-
-            .category-header {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            h1 {
-                font-size: 2.5rem;
-            }
-        }
-
-        @media print {
-            body {
-                background: white;
-            }
-            
-            body::before,
-            body::after,
-            .shooting-star {
-                display: none;
-            }
-
-            .gift-item {
-                break-inside: avoid;
-            }
+            .gifts-list { grid-template-columns: 1fr; }
+            .category-header { flex-direction: column; text-align: center; }
+            h1 { font-size: 2.5rem; }
+            .modal-content { padding: 30px 20px; }
         }
     </style>
 </head>
@@ -387,242 +207,20 @@
     <div class="shooting-star" style="top: 10%; left: 10%;"></div>
     <div class="shooting-star" style="top: 30%; left: 60%; animation-delay: 5s;"></div>
     <div class="shooting-star" style="top: 50%; left: 20%; animation-delay: 8s;"></div>
-
     <div class="container">
         <header>
             <div class="stars-divider">
-                <span class="star-icon">✦</span>
-                <span class="star-icon">✧</span>
-                <span class="star-icon">✦</span>
+                <span class="star-icon">✦</span><span class="star-icon">✧</span><span class="star-icon">✦</span>
             </div>
-            
             <h1>Sofia</h1>
             <p class="subtitle">15 Anos</p>
             <p class="theme-text">Uma Noite Estrelada</p>
-            
             <div class="stars-divider">
-                <span class="star-icon">✦</span>
-                <span class="star-icon">✧</span>
-                <span class="star-icon">✦</span>
+                <span class="star-icon">✦</span><span class="star-icon">✧</span><span class="star-icon">✦</span>
             </div>
-
-            <p class="intro-text">
-                Aqui está uma lista de sugestões de presentes para celebrar esse momento tão especial. 
-                Cada item foi pensado com carinho para tornar essa data ainda mais inesquecível! ✨
-            </p>
+            <p class="intro-text">Aqui está uma lista de sugestões de presentes para celebrar esse momento tão especial. Cada item foi pensado com carinho para tornar essa data ainda mais inesquecível! ✨</p>
         </header>
-
-        <!-- Simbólicos e Especiais -->
-        <div class="category-section">
-            <div class="category-header">
-                <span class="category-icon">💎</span>
-                <h2 class="category-title">Presentes Simbólicos & Especiais</h2>
-            </div>
-            <div class="gifts-list">
-                <div class="gift-item">
-                    <div class="gift-number">1</div>
-                    <div class="gift-name">Anel solitário em prata</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">2</div>
-                    <div class="gift-name">Colar com inicial ou nome</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">3</div>
-                    <div class="gift-name">Pulseira com pingente</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">4</div>
-                    <div class="gift-name">Relógio feminino delicado</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">5</div>
-                    <div class="gift-name">Jóia personalizada (nome ou data gravada)</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Beleza e Autocuidado -->
-        <div class="category-section">
-            <div class="category-header">
-                <span class="category-icon">🌸</span>
-                <h2 class="category-title">Beleza & Autocuidado</h2>
-            </div>
-            <div class="gifts-list">
-                <div class="gift-item">
-                    <div class="gift-number">6</div>
-                    <div class="gift-name">Perfume (212 VIP Rosé, La Vie Est Belle, Egeo)</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">7</div>
-                    <div class="gift-name">Kit de skincare completo</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">8</div>
-                    <div class="gift-name">Kit de maquiagem iniciante</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">9</div>
-                    <div class="gift-name">Escova secadora / modeladora</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">10</div>
-                    <div class="gift-name">Nécessaire personalizada com produtos</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tecnologia & Acessórios -->
-        <div class="category-section">
-            <div class="category-header">
-                <span class="category-icon">📱</span>
-                <h2 class="category-title">Tecnologia & Acessórios</h2>
-            </div>
-            <div class="gifts-list">
-                <div class="gift-item">
-                    <div class="gift-number">11</div>
-                    <div class="gift-name">Fones Bluetooth (tipo AirPods)</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">12</div>
-                    <div class="gift-name">Caixa de som portátil</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">13</div>
-                    <div class="gift-name">Capinha de celular personalizada</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">14</div>
-                    <div class="gift-name">Carregador portátil (powerbank)</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">15</div>
-                    <div class="gift-name">Anel/led para selfies</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Decoração & Estilo -->
-        <div class="category-section">
-            <div class="category-header">
-                <span class="category-icon">🌙</span>
-                <h2 class="category-title">Decoração & Estilo de Quarto</h2>
-            </div>
-            <div class="gifts-list">
-                <div class="gift-item">
-                    <div class="gift-number">16</div>
-                    <div class="gift-name">Luminária fofa (capivara, nuvem, lua, LED)</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">17</div>
-                    <div class="gift-name">Conjunto de pisca-pisca estilo Tumblr</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">18</div>
-                    <div class="gift-name">Painel de fotos com pregadores</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">19</div>
-                    <div class="gift-name">Almofada personalizada</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">20</div>
-                    <div class="gift-name">Velas aromáticas sofisticadas</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Criativas e Diferentonas -->
-        <div class="category-section">
-            <div class="category-header">
-                <span class="category-icon">🎨</span>
-                <h2 class="category-title">Criativas & Diferentonas</h2>
-            </div>
-            <div class="gifts-list">
-                <div class="gift-item">
-                    <div class="gift-number">21</div>
-                    <div class="gift-name">Livro de mensagens para os 15 anos</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">22</div>
-                    <div class="gift-name">Scrapbook com fotos e memórias</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">23</div>
-                    <div class="gift-name">Pinte-e-beba / kit de pintura criativa</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">24</div>
-                    <div class="gift-name">Câmera instantânea (Instax)</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">25</div>
-                    <div class="gift-name">Polaroid com álbum de fotos</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Experiências -->
-        <div class="category-section">
-            <div class="category-header">
-                <span class="category-icon">✨</span>
-                <h2 class="category-title">Experiências (as que mais marcam)</h2>
-            </div>
-            <div class="gifts-list">
-                <div class="gift-item">
-                    <div class="gift-number">26</div>
-                    <div class="gift-name">Dia de spa (em casa ou em salão)</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">27</div>
-                    <div class="gift-name">Aula especial (dança, música, fotografia)</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">28</div>
-                    <div class="gift-name">Show, teatro ou cinema com amigas</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">29</div>
-                    <div class="gift-name">Sessão de fotos profissional</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">30</div>
-                    <div class="gift-name">Passeio surpresa (parque, café temático, piquenique)</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Personalizados -->
-        <div class="category-section">
-            <div class="category-header">
-                <span class="category-icon">💫</span>
-                <h2 class="category-title">Presentes Personalizados</h2>
-            </div>
-            <div class="gifts-list">
-                <div class="gift-item">
-                    <div class="gift-number">31</div>
-                    <div class="gift-name">Caixa explosiva com fotos</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">32</div>
-                    <div class="gift-name">Caixa surpresa com doces favoritos</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">33</div>
-                    <div class="gift-name">Copo térmico com nome</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">34</div>
-                    <div class="gift-name">Planner personalizado 2026</div>
-                </div>
-                <div class="gift-item">
-                    <div class="gift-number">35</div>
-                    <div class="gift-name">Camisa ou moletom com estampa especial</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
+        <div id="gifts-container"></div>
         <div class="footer">
             <h3>Uma Celebração Sob as Estrelas</h3>
             <p>Esses 35 presentes foram selecionados com muito carinho para celebrar os 15 anos da Sofia.</p>
@@ -630,5 +228,35 @@
             <div class="footer-stars">✦ ✧ ✦ ✧ ✦</div>
         </div>
     </div>
+    <div id="reserveModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Reservar Presente</h2>
+                <p id="modalGiftName"></p>
+            </div>
+            <form id="reserveForm">
+                <div class="form-group">
+                    <label for="guestName">Seu nome completo:</label>
+                    <input type="text" id="guestName" required placeholder="Digite seu nome">
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="modal-btn cancel" onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="modal-btn confirm">Confirmar Reserva</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        const gifts=[{id:1,name:'Anel solitário em prata',category:'💎 Presentes Simbólicos & Especiais',icon:'💎'},{id:2,name:'Colar com inicial ou nome',category:'💎 Presentes Simbólicos & Especiais',icon:'💎'},{id:3,name:'Pulseira com pingente',category:'💎 Presentes Simbólicos & Especiais',icon:'💎'},{id:4,name:'Relógio feminino delicado',category:'💎 Presentes Simbólicos & Especiais',icon:'💎'},{id:5,name:'Jóia personalizada (nome ou data gravada)',category:'💎 Presentes Simbólicos & Especiais',icon:'💎'},{id:6,name:'Perfume (212 VIP Rosé, La Vie Est Belle, Egeo)',category:'🌸 Beleza & Autocuidado',icon:'🌸'},{id:7,name:'Kit de skincare completo',category:'🌸 Beleza & Autocuidado',icon:'🌸'},{id:8,name:'Kit de maquiagem iniciante',category:'🌸 Beleza & Autocuidado',icon:'🌸'},{id:9,name:'Escova secadora / modeladora',category:'🌸 Beleza & Autocuidado',icon:'🌸'},{id:10,name:'Nécessaire personalizada com produtos',category:'🌸 Beleza & Autocuidado',icon:'🌸'},{id:11,name:'Fones Bluetooth (tipo AirPods)',category:'📱 Tecnologia & Acessórios',icon:'📱'},{id:12,name:'Caixa de som portátil',category:'📱 Tecnologia & Acessórios',icon:'📱'},{id:13,name:'Capinha de celular personalizada',category:'📱 Tecnologia & Acessórios',icon:'📱'},{id:14,name:'Carregador portátil (powerbank)',category:'📱 Tecnologia & Acessórios',icon:'📱'},{id:15,name:'Anel/led para selfies',category:'📱 Tecnologia & Acessórios',icon:'📱'},{id:16,name:'Luminária fofa (capivara, nuvem, lua, LED)',category:'🌙 Decoração & Estilo de Quarto',icon:'🌙'},{id:17,name:'Conjunto de pisca-pisca estilo Tumblr',category:'🌙 Decoração & Estilo de Quarto',icon:'🌙'},{id:18,name:'Painel de fotos com pregadores',category:'🌙 Decoração & Estilo de Quarto',icon:'🌙'},{id:19,name:'Almofada personalizada',category:'🌙 Decoração & Estilo de Quarto',icon:'🌙'},{id:20,name:'Velas aromáticas sofisticadas',category:'🌙 Decoração & Estilo de Quarto',icon:'🌙'},{id:21,name:'Livro de mensagens para os 15 anos',category:'🎨 Criativas & Diferentonas',icon:'🎨'},{id:22,name:'Scrapbook com fotos e memórias',category:'🎨 Criativas & Diferentonas',icon:'🎨'},{id:23,name:'Pinte-e-beba / kit de pintura criativa',category:'🎨 Criativas & Diferentonas',icon:'🎨'},{id:24,name:'Câmera instantânea (Instax)',category:'🎨 Criativas & Diferentonas',icon:'🎨'},{id:25,name:'Polaroid com álbum de fotos',category:'🎨 Criativas & Diferentonas',icon:'🎨'},{id:26,name:'Dia de spa (em casa ou em salão)',category:'✨ Experiências (as que mais marcam)',icon:'✨'},{id:27,name:'Aula especial (dança, música, fotografia)',category:'✨ Experiências (as que mais marcam)',icon:'✨'},{id:28,name:'Show, teatro ou cinema com amigas',category:'✨ Experiências (as que mais marcam)',icon:'✨'},{id:29,name:'Sessão de fotos profissional',category:'✨ Experiências (as que mais marcam)',icon:'✨'},{id:30,name:'Passeio surpresa (parque, café temático, piquenique)',category:'✨ Experiências (as que mais marcam)',icon:'✨'},{id:31,name:'Caixa explosiva com fotos',category:'💫 Presentes Personalizados',icon:'💫'},{id:32,name:'Caixa surpresa com doces favoritos',category:'💫 Presentes Personalizados',icon:'💫'},{id:33,name:'Copo térmico com nome',category:'💫 Presentes Personalizados',icon:'💫'},{id:34,name:'Planner personalizado 2026',category:'💫 Presentes Personalizados',icon:'💫'},{id:35,name:'Camisa ou moletom com estampa especial',category:'💫 Presentes Personalizados',icon:'💫'}];
+        let currentGiftId=null;
+        const KEY='sofia-gifts';
+        async function loadReservations(){try{const r=await window.storage.get(KEY,true);return r?JSON.parse(r.value):{}}catch{return{}}}
+        async function saveReservation(id,name){try{const res=await loadReservations();res[id]=name;await window.storage.set(KEY,JSON.stringify(res),true);return true}catch(e){console.error('Erro:',e);return false}}
+        function openReserveModal(id,name){currentGiftId=id;document.getElementById('modalGiftName').textContent=name;document.getElementById('guestName').value='';document.getElementById('reserveModal').classList.add('active')}
+        function closeModal(){document.getElementById('reserveModal').classList.remove('active')}
+        document.getElementById('reserveForm').addEventListener('submit',async(e)=>{e.preventDefault();const name=document.getElementById('guestName').value.trim();if(!name)return;const success=await saveReservation(currentGiftId,name);if(success){closeModal();await renderGifts()}});
+        async function renderGifts(){const reservations=await loadReservations();const categories=[...new Set(gifts.map(g=>g.category))];const container=document.getElementById('gifts-container');container.innerHTML='';categories.forEach(cat=>{const catGifts=gifts.filter(g=>g.category===cat);const section=document.createElement('div');section.className='category-section';const icon=catGifts[0].icon;section.innerHTML=`<div class="category-header"><span class="category-icon">${icon}</span><h2 class="category-title">${cat}</h2></div><div class="gifts-list"></div>`;const list=section.querySelector('.gifts-list');catGifts.forEach(gift=>{const isReserved=!!reservations[gift.id];const item=document.createElement('div');item.className=`gift-item${isReserved?' reserved':''}`;const statusHTML=isReserved?`<div class="gift-status reserved">🎁 Reservado por: ${reservations[gift.id]}</div>`:'<div class="gift-status available">✅ Disponível</div>';const btnHTML=isReserved?'':`<button class="reserve-btn" onclick="openReserveModal(${gift.id},'${gift.name}')">Reservar este presente</button>`;item.innerHTML=`<div class="gift-number">${gift.id}</div><div class="gift-name">${gift.name}</div>${statusHTML}${btnHTML}`;list.appendChild(item)});container.appendChild(section)})}
+        renderGifts();
+    </script>
 </body>
 </html>
