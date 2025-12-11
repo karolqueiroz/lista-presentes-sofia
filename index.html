@@ -16,6 +16,8 @@
         @keyframes shootingStar { 0% { transform: translateX(-100px) translateY(-100px); opacity: 0; } 10%, 90% { opacity: 1; } 100% { transform: translateX(1000px) translateY(1000px); opacity: 0; } }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        
         body {
             font-family: 'Montserrat', sans-serif;
             background: linear-gradient(180deg, #0f1626 0%, var(--navy) 50%, var(--dark-blue) 100%);
@@ -33,6 +35,35 @@
             width: 2px; height: 2px; top: 30%; right: 10%; animation-delay: 1.5s;
             box-shadow: -100px 80px 0 var(--light-gold), -200px 150px 0 var(--gold), -300px 100px 0 var(--light-gold), -400px 180px 0 var(--gold), -150px 250px 0 var(--light-gold), -250px 220px 0 var(--gold), -350px 280px 0 var(--light-gold), -100px 350px 0 var(--gold), -200px 380px 0 var(--light-gold), -300px 420px 0 var(--gold);
         }
+        
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 9999;
+            background: rgba(26, 40, 71, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid var(--gold);
+        }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(212, 175, 55, 0.3);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text {
+            color: var(--gold);
+            font-size: 1.2rem;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
         .container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
         .shooting-star {
             position: fixed; width: 2px; height: 2px; background: var(--gold);
@@ -97,104 +128,93 @@
         }
         .gift-item {
             background: linear-gradient(135deg, rgba(30, 45, 74, 0.9), rgba(26, 40, 71, 0.9));
-            border-radius: 15px; padding: 20px; border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px; padding: 20px; border: 1px solid var(--shadow-gold);
             backdrop-filter: blur(10px); transition: all 0.3s ease; position: relative; overflow: hidden;
         }
-        .gift-item.reserved {
-            background: linear-gradient(135deg, rgba(30, 45, 74, 0.5), rgba(26, 40, 71, 0.5));
-            border-color: rgba(212, 175, 55, 0.1); opacity: 0.7;
-        }
         .gift-item::before {
-            content: '✨'; position: absolute; top: 10px; right: 10px;
-            font-size: 1.5rem; opacity: 0; transition: all 0.3s ease;
+            content: '✨'; position: absolute; top: 10px; right: 10px; font-size: 1.5rem;
+            opacity: 0; transition: all 0.3s ease;
         }
-        .gift-item:not(.reserved):hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px var(--shadow-blue), 0 0 20px var(--shadow-gold);
-            border-color: var(--gold);
-        }
-        .gift-item:not(.reserved):hover::before { opacity: 0.4; transform: rotate(20deg); }
+        .gift-item:hover { transform: translateY(-5px); box-shadow: 0 10px 30px var(--shadow-blue), 0 0 20px var(--shadow-gold); border-color: var(--gold); }
+        .gift-item:hover::before { opacity: 0.4; transform: rotate(20deg); }
+        .gift-item.reserved { opacity: 0.7; }
+        .gift-item.reserved .gift-name { text-decoration: line-through; opacity: 0.7; }
         .gift-number {
             display: inline-flex; align-items: center; justify-content: center;
             width: 35px; height: 35px; background: linear-gradient(135deg, var(--gold), #b8941f);
             color: var(--navy); border-radius: 50%; font-weight: 700; font-size: 1rem;
-            margin-bottom: 12px; box-shadow: 0 4px 10px var(--shadow-gold);
+            margin-bottom: 12px; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
         }
-        .gift-item.reserved .gift-number { background: linear-gradient(135deg, #6b7280, #4b5563); }
-        .gift-name {
-            color: var(--light-gold); font-size: 1.05rem; line-height: 1.5;
-            font-weight: 500; margin-bottom: 15px;
-        }
-        .gift-item.reserved .gift-name { text-decoration: line-through; opacity: 0.6; }
+        .gift-name { color: var(--light-gold); font-size: 1.05rem; line-height: 1.5; font-weight: 500; margin-bottom: 12px; }
         .gift-status {
-            display: flex; align-items: center; gap: 8px; margin-top: 12px;
-            padding: 8px 12px; background: rgba(212, 175, 55, 0.1);
-            border-radius: 8px; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 8px; padding: 8px 12px;
+            border-radius: 10px; font-size: 0.9rem; font-weight: 600; margin-top: 12px;
         }
-        .gift-status.available { color: var(--green); }
-        .gift-status.reserved { color: var(--light-gold); background: rgba(255, 255, 255, 0.05); }
+        .gift-status.available { background: rgba(74, 222, 128, 0.15); color: var(--green); border: 1px solid rgba(74, 222, 128, 0.3); }
+        .gift-status.reserved { background: rgba(255, 152, 0, 0.15); color: #ffb74d; border: 1px solid rgba(255, 152, 0, 0.3); }
         .reserve-btn {
-            width: 100%; padding: 12px; background: linear-gradient(135deg, var(--gold), #b8941f);
-            color: var(--navy); border: none; border-radius: 10px; font-weight: 600;
-            font-size: 1rem; cursor: pointer; transition: all 0.3s ease; margin-top: 12px;
-            box-shadow: 0 4px 10px var(--shadow-gold);
+            width: 100%; margin-top: 12px; padding: 10px; background: linear-gradient(135deg, var(--gold), #b8941f);
+            color: var(--navy); border: none; border-radius: 10px; font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
         }
-        .reserve-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(212, 175, 55, 0.4); }
-        .reserved-by { font-size: 0.85rem; color: var(--light-gold); opacity: 0.8; margin-top: 8px; }
+        .reserve-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(212, 175, 55, 0.5); }
+        .reserve-btn:active { transform: translateY(0); }
         .footer {
             background: rgba(26, 40, 71, 0.8); padding: 40px 30px; border-radius: 20px;
             margin-top: 50px; text-align: center; border: 1px solid var(--shadow-gold);
             backdrop-filter: blur(10px); box-shadow: 0 10px 30px var(--shadow-blue);
         }
         .footer h3 {
-            font-family: 'Cormorant Garamond', serif; color: var(--gold);
-            font-size: 2rem; margin-bottom: 20px; text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+            font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 2rem;
+            margin-bottom: 20px; text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
         }
         .footer p { color: var(--light-gold); line-height: 1.8; font-size: 1.1rem; margin-bottom: 15px; }
         .footer-stars { margin-top: 30px; font-size: 2rem; letter-spacing: 10px; opacity: 0.6; }
-        .modal {
-            display: none; position: fixed; z-index: 1000; left: 0; top: 0;
-            width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px); animation: fadeIn 0.3s ease;
-        }
-        .modal.active { display: flex; align-items: center; justify-content: center; }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 1000; backdrop-filter: blur(5px); }
+        .modal.active { display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s ease; }
         .modal-content {
-            background: linear-gradient(135deg, rgba(30, 45, 74, 0.98), rgba(26, 40, 71, 0.98));
-            padding: 40px; border-radius: 20px; border: 2px solid var(--shadow-gold);
-            max-width: 500px; width: 90%; box-shadow: 0 20px 60px var(--shadow-blue);
+            background: linear-gradient(135deg, var(--dark-blue), var(--navy));
+            max-width: 500px; width: 90%; padding: 40px; border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px var(--shadow-gold);
+            border: 2px solid var(--shadow-gold); animation: slideUp 0.4s ease;
         }
-        .modal-header { text-align: center; margin-bottom: 30px; }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-header { margin-bottom: 25px; text-align: center; }
         .modal-header h2 {
-            font-family: 'Cormorant Garamond', serif; color: var(--gold);
-            font-size: 2rem; margin-bottom: 10px; text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+            font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 2rem;
+            margin-bottom: 10px; text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
         }
         .modal-header p { color: var(--light-gold); font-size: 1rem; }
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; color: var(--light-gold); margin-bottom: 8px; font-size: 0.95rem; }
         .form-group input {
             width: 100%; padding: 12px 15px; background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--shadow-gold); border-radius: 10px;
-            color: #fff; font-size: 1rem; transition: all 0.3s ease;
+            border: 1px solid var(--shadow-gold); border-radius: 10px; color: #fff;
+            font-size: 1rem; font-family: 'Montserrat', sans-serif; transition: all 0.3s ease;
         }
-        .form-group input:focus {
-            outline: none; border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
-        }
+        .form-group input::placeholder { color: rgba(255, 255, 255, 0.4); }
+        .form-group input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
         .modal-buttons { display: flex; gap: 15px; margin-top: 30px; }
         .modal-btn {
-            flex: 1; padding: 12px; border: none; border-radius: 10px;
-            font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;
+            flex: 1; padding: 12px; border: none; border-radius: 10px; font-weight: 600;
+            font-size: 1rem; cursor: pointer; transition: all 0.3s ease; font-family: 'Montserrat', sans-serif;
         }
         .modal-btn.confirm {
-            background: linear-gradient(135deg, var(--gold), #b8941f);
-            color: var(--navy); box-shadow: 0 4px 10px var(--shadow-gold);
+            background: linear-gradient(135deg, var(--gold), #b8941f); color: var(--navy);
+            box-shadow: 0 4px 10px var(--shadow-gold);
         }
         .modal-btn.confirm:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(212, 175, 55, 0.4); }
-        .modal-btn.cancel {
-            background: rgba(255, 255, 255, 0.1); color: var(--light-gold);
-            border: 1px solid var(--shadow-gold);
-        }
+        .modal-btn.cancel { background: rgba(255, 255, 255, 0.1); color: var(--light-gold); border: 1px solid var(--shadow-gold); }
         .modal-btn.cancel:hover { background: rgba(255, 255, 255, 0.15); }
+        
+        .error-message {
+            background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5; padding: 12px; border-radius: 10px; margin-bottom: 15px;
+            text-align: center; display: none;
+        }
+        .error-message.show { display: block; animation: fadeIn 0.3s ease; }
+        
         @media (max-width: 768px) {
             .gifts-list { grid-template-columns: 1fr; }
             .category-header { flex-direction: column; text-align: center; }
@@ -204,9 +224,16 @@
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loadingScreen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Carregando presentes...</div>
+    </div>
+
     <div class="shooting-star" style="top: 10%; left: 10%;"></div>
     <div class="shooting-star" style="top: 30%; left: 60%; animation-delay: 5s;"></div>
     <div class="shooting-star" style="top: 50%; left: 20%; animation-delay: 8s;"></div>
+    
     <div class="container">
         <header>
             <div class="stars-divider">
@@ -218,9 +245,11 @@
             <div class="stars-divider">
                 <span class="star-icon">✦</span><span class="star-icon">✧</span><span class="star-icon">✦</span>
             </div>
-            <p class="intro-text">Aqui está uma lista de sugestões de presentes para celebrar esse momento tão especial. Cada item foi pensado com carinho para tornar essa data ainda mais inesquecível! ✨</p>
+            <p class="intro-text">Aqui está uma lista de sugestões de presentes para celebrar esse momento tão especial. Escolha um presente e reserve com seu nome! ✨</p>
         </header>
+        
         <div id="gifts-container"></div>
+        
         <div class="footer">
             <h3>Uma Celebração Sob as Estrelas</h3>
             <p>Esses 35 presentes foram selecionados com muito carinho para celebrar os 15 anos da Sofia.</p>
@@ -228,16 +257,19 @@
             <div class="footer-stars">✦ ✧ ✦ ✧ ✦</div>
         </div>
     </div>
+    
+    <!-- Modal de Reserva -->
     <div id="reserveModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Reservar Presente</h2>
                 <p id="modalGiftName"></p>
             </div>
+            <div class="error-message" id="errorMessage"></div>
             <form id="reserveForm">
                 <div class="form-group">
                     <label for="guestName">Seu nome completo:</label>
-                    <input type="text" id="guestName" required placeholder="Digite seu nome">
+                    <input type="text" id="guestName" required placeholder="Digite seu nome" autocomplete="name">
                 </div>
                 <div class="modal-buttons">
                     <button type="button" class="modal-btn cancel" onclick="closeModal()">Cancelar</button>
@@ -246,17 +278,176 @@
             </form>
         </div>
     </div>
-    <script>
-        const gifts=[{id:1,name:'Anel solitário em prata',category:'💎 Presentes Simbólicos & Especiais',icon:'💎'},{id:2,name:'Colar com inicial ou nome',category:'💎 Presentes Simbólicos & Especiais',icon:'💎'},{id:3,name:'Pulseira com pingente',category:'💎 Presentes Simbólicos & Especiais',icon:'💎'},{id:4,name:'Relógio feminino delicado',category:'💎 Presentes Simbólicos & Especiais',icon:'💎'},{id:5,name:'Jóia personalizada (nome ou data gravada)',category:'💎 Presentes Simbólicos & Especiais',icon:'💎'},{id:6,name:'Perfume (212 VIP Rosé, La Vie Est Belle, Egeo)',category:'🌸 Beleza & Autocuidado',icon:'🌸'},{id:7,name:'Kit de skincare completo',category:'🌸 Beleza & Autocuidado',icon:'🌸'},{id:8,name:'Kit de maquiagem iniciante',category:'🌸 Beleza & Autocuidado',icon:'🌸'},{id:9,name:'Escova secadora / modeladora',category:'🌸 Beleza & Autocuidado',icon:'🌸'},{id:10,name:'Nécessaire personalizada com produtos',category:'🌸 Beleza & Autocuidado',icon:'🌸'},{id:11,name:'Fones Bluetooth (tipo AirPods)',category:'📱 Tecnologia & Acessórios',icon:'📱'},{id:12,name:'Caixa de som portátil',category:'📱 Tecnologia & Acessórios',icon:'📱'},{id:13,name:'Capinha de celular personalizada',category:'📱 Tecnologia & Acessórios',icon:'📱'},{id:14,name:'Carregador portátil (powerbank)',category:'📱 Tecnologia & Acessórios',icon:'📱'},{id:15,name:'Anel/led para selfies',category:'📱 Tecnologia & Acessórios',icon:'📱'},{id:16,name:'Luminária fofa (capivara, nuvem, lua, LED)',category:'🌙 Decoração & Estilo de Quarto',icon:'🌙'},{id:17,name:'Conjunto de pisca-pisca estilo Tumblr',category:'🌙 Decoração & Estilo de Quarto',icon:'🌙'},{id:18,name:'Painel de fotos com pregadores',category:'🌙 Decoração & Estilo de Quarto',icon:'🌙'},{id:19,name:'Almofada personalizada',category:'🌙 Decoração & Estilo de Quarto',icon:'🌙'},{id:20,name:'Velas aromáticas sofisticadas',category:'🌙 Decoração & Estilo de Quarto',icon:'🌙'},{id:21,name:'Livro de mensagens para os 15 anos',category:'🎨 Criativas & Diferentonas',icon:'🎨'},{id:22,name:'Scrapbook com fotos e memórias',category:'🎨 Criativas & Diferentonas',icon:'🎨'},{id:23,name:'Pinte-e-beba / kit de pintura criativa',category:'🎨 Criativas & Diferentonas',icon:'🎨'},{id:24,name:'Câmera instantânea (Instax)',category:'🎨 Criativas & Diferentonas',icon:'🎨'},{id:25,name:'Polaroid com álbum de fotos',category:'🎨 Criativas & Diferentonas',icon:'🎨'},{id:26,name:'Dia de spa (em casa ou em salão)',category:'✨ Experiências (as que mais marcam)',icon:'✨'},{id:27,name:'Aula especial (dança, música, fotografia)',category:'✨ Experiências (as que mais marcam)',icon:'✨'},{id:28,name:'Show, teatro ou cinema com amigas',category:'✨ Experiências (as que mais marcam)',icon:'✨'},{id:29,name:'Sessão de fotos profissional',category:'✨ Experiências (as que mais marcam)',icon:'✨'},{id:30,name:'Passeio surpresa (parque, café temático, piquenique)',category:'✨ Experiências (as que mais marcam)',icon:'✨'},{id:31,name:'Caixa explosiva com fotos',category:'💫 Presentes Personalizados',icon:'💫'},{id:32,name:'Caixa surpresa com doces favoritos',category:'💫 Presentes Personalizados',icon:'💫'},{id:33,name:'Copo térmico com nome',category:'💫 Presentes Personalizados',icon:'💫'},{id:34,name:'Planner personalizado 2026',category:'💫 Presentes Personalizados',icon:'💫'},{id:35,name:'Camisa ou moletom com estampa especial',category:'💫 Presentes Personalizados',icon:'💫'}];
-        let currentGiftId=null;
-        const KEY='sofia-gifts';
-        async function loadReservations(){try{const r=await window.storage.get(KEY,true);return r?JSON.parse(r.value):{}}catch{return{}}}
-        async function saveReservation(id,name){try{const res=await loadReservations();res[id]=name;await window.storage.set(KEY,JSON.stringify(res),true);return true}catch(e){console.error('Erro:',e);return false}}
-        function openReserveModal(id,name){currentGiftId=id;document.getElementById('modalGiftName').textContent=name;document.getElementById('guestName').value='';document.getElementById('reserveModal').classList.add('active')}
-        function closeModal(){document.getElementById('reserveModal').classList.remove('active')}
-        document.getElementById('reserveForm').addEventListener('submit',async(e)=>{e.preventDefault();const name=document.getElementById('guestName').value.trim();if(!name)return;const success=await saveReservation(currentGiftId,name);if(success){closeModal();await renderGifts()}});
-        async function renderGifts(){const reservations=await loadReservations();const categories=[...new Set(gifts.map(g=>g.category))];const container=document.getElementById('gifts-container');container.innerHTML='';categories.forEach(cat=>{const catGifts=gifts.filter(g=>g.category===cat);const section=document.createElement('div');section.className='category-section';const icon=catGifts[0].icon;section.innerHTML=`<div class="category-header"><span class="category-icon">${icon}</span><h2 class="category-title">${cat}</h2></div><div class="gifts-list"></div>`;const list=section.querySelector('.gifts-list');catGifts.forEach(gift=>{const isReserved=!!reservations[gift.id];const item=document.createElement('div');item.className=`gift-item${isReserved?' reserved':''}`;const statusHTML=isReserved?`<div class="gift-status reserved">🎁 Reservado por: ${reservations[gift.id]}</div>`:'<div class="gift-status available">✅ Disponível</div>';const btnHTML=isReserved?'':`<button class="reserve-btn" onclick="openReserveModal(${gift.id},'${gift.name}')">Reservar este presente</button>`;item.innerHTML=`<div class="gift-number">${gift.id}</div><div class="gift-name">${gift.name}</div>${statusHTML}${btnHTML}`;list.appendChild(item)});container.appendChild(section)})}
-        renderGifts();
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, set, get, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        // Configuração do Firebase - VOCÊ AINDA PRECISA PREENCHER OS VALORES!
+        // Vá em: Firebase Console → Configurações do Projeto → Seus Apps → SDK Config
+        const firebaseConfig = {
+            apiKey: "COLE_SUA_API_KEY_AQUI",
+            authDomain: "lista-presentes-sofia.firebaseapp.com",
+            databaseURL: "https://lista-presentes-sofia-default-rtdb.firebaseio.com",
+            projectId: "lista-presentes-sofia",
+            storageBucket: "lista-presentes-sofia.appspot.com",
+            messagingSenderId: "COLE_SEU_MESSAGING_SENDER_ID_AQUI",
+            appId: "COLE_SEU_APP_ID_AQUI"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const giftsRef = ref(database, 'gifts');
+
+        // Lista de presentes
+        const gifts = [
+            {id:1, name:'Anel solitário em prata', category:'💎 Presentes Simbólicos & Especiais', icon:'💎'},
+            {id:2, name:'Colar com inicial ou nome', category:'💎 Presentes Simbólicos & Especiais', icon:'💎'},
+            {id:3, name:'Pulseira com pingente', category:'💎 Presentes Simbólicos & Especiais', icon:'💎'},
+            {id:4, name:'Relógio feminino delicado', category:'💎 Presentes Simbólicos & Especiais', icon:'💎'},
+            {id:5, name:'Jóia personalizada (nome ou data gravada)', category:'💎 Presentes Simbólicos & Especiais', icon:'💎'},
+            {id:6, name:'Perfume (212 VIP Rosé, La Vie Est Belle, Egeo)', category:'🌸 Beleza & Autocuidado', icon:'🌸'},
+            {id:7, name:'Kit de skincare completo', category:'🌸 Beleza & Autocuidado', icon:'🌸'},
+            {id:8, name:'Kit de maquiagem iniciante', category:'🌸 Beleza & Autocuidado', icon:'🌸'},
+            {id:9, name:'Escova secadora / modeladora', category:'🌸 Beleza & Autocuidado', icon:'🌸'},
+            {id:10, name:'Nécessaire personalizada com produtos', category:'🌸 Beleza & Autocuidado', icon:'🌸'},
+            {id:11, name:'Fones Bluetooth (tipo AirPods)', category:'📱 Tecnologia & Acessórios', icon:'📱'},
+            {id:12, name:'Caixa de som portátil', category:'📱 Tecnologia & Acessórios', icon:'📱'},
+            {id:13, name:'Capinha de celular personalizada', category:'📱 Tecnologia & Acessórios', icon:'📱'},
+            {id:14, name:'Carregador portátil (powerbank)', category:'📱 Tecnologia & Acessórios', icon:'📱'},
+            {id:15, name:'Anel/led para selfies', category:'📱 Tecnologia & Acessórios', icon:'📱'},
+            {id:16, name:'Luminária fofa (capivara, nuvem, lua, LED)', category:'🌙 Decoração & Estilo de Quarto', icon:'🌙'},
+            {id:17, name:'Conjunto de pisca-pisca estilo Tumblr', category:'🌙 Decoração & Estilo de Quarto', icon:'🌙'},
+            {id:18, name:'Painel de fotos com pregadores', category:'🌙 Decoração & Estilo de Quarto', icon:'🌙'},
+            {id:19, name:'Almofada personalizada', category:'🌙 Decoração & Estilo de Quarto', icon:'🌙'},
+            {id:20, name:'Velas aromáticas sofisticadas', category:'🌙 Decoração & Estilo de Quarto', icon:'🌙'},
+            {id:21, name:'Livro de mensagens para os 15 anos', category:'🎨 Criativas & Diferentonas', icon:'🎨'},
+            {id:22, name:'Scrapbook com fotos e memórias', category:'🎨 Criativas & Diferentonas', icon:'🎨'},
+            {id:23, name:'Pinte-e-beba / kit de pintura criativa', category:'🎨 Criativas & Diferentonas', icon:'🎨'},
+            {id:24, name:'Câmera instantânea (Instax)', category:'🎨 Criativas & Diferentonas', icon:'🎨'},
+            {id:25, name:'Polaroid com álbum de fotos', category:'🎨 Criativas & Diferentonas', icon:'🎨'},
+            {id:26, name:'Dia de spa (em casa ou em salão)', category:'✨ Experiências (as que mais marcam)', icon:'✨'},
+            {id:27, name:'Aula especial (dança, música, fotografia)', category:'✨ Experiências (as que mais marcam)', icon:'✨'},
+            {id:28, name:'Show, teatro ou cinema com amigas', category:'✨ Experiências (as que mais marcam)', icon:'✨'},
+            {id:29, name:'Sessão de fotos profissional', category:'✨ Experiências (as que mais marcam)', icon:'✨'},
+            {id:30, name:'Passeio surpresa (parque, café temático, piquenique)', category:'✨ Experiências (as que mais marcam)', icon:'✨'},
+            {id:31, name:'Caixa explosiva com fotos', category:'💫 Presentes Personalizados', icon:'💫'},
+            {id:32, name:'Caixa surpresa com doces favoritos', category:'💫 Presentes Personalizados', icon:'💫'},
+            {id:33, name:'Copo térmico com nome', category:'💫 Presentes Personalizados', icon:'💫'},
+            {id:34, name:'Planner personalizado 2026', category:'💫 Presentes Personalizados', icon:'💫'},
+            {id:35, name:'Camisa ou moletom com estampa especial', category:'💫 Presentes Personalizados', icon:'💫'}
+        ];
+
+        let currentGiftId = null;
+        let reservations = {};
+
+        // Escutar mudanças em tempo real
+        onValue(giftsRef, (snapshot) => {
+            reservations = snapshot.val() || {};
+            renderGifts();
+            document.getElementById('loadingScreen').style.display = 'none';
+        });
+
+        function renderGifts() {
+            const categories = [...new Set(gifts.map(g => g.category))];
+            const container = document.getElementById('gifts-container');
+            container.innerHTML = '';
+
+            categories.forEach(cat => {
+                const catGifts = gifts.filter(g => g.category === cat);
+                const section = document.createElement('div');
+                section.className = 'category-section';
+                const icon = catGifts[0].icon;
+                
+                section.innerHTML = `
+                    <div class="category-header">
+                        <span class="category-icon">${icon}</span>
+                        <h2 class="category-title">${cat}</h2>
+                    </div>
+                    <div class="gifts-list"></div>
+                `;
+
+                const list = section.querySelector('.gifts-list');
+                
+                catGifts.forEach(gift => {
+                    const isReserved = !!reservations[gift.id];
+                    const item = document.createElement('div');
+                    item.className = `gift-item${isReserved ? ' reserved' : ''}`;
+                    
+                    const statusHTML = isReserved 
+                        ? `<div class="gift-status reserved">🎁 Reservado por: ${reservations[gift.id]}</div>`
+                        : '<div class="gift-status available">✅ Disponível</div>';
+                    
+                    const btnHTML = isReserved 
+                        ? '' 
+                        : `<button class="reserve-btn" onclick="window.openReserveModal(${gift.id}, '${gift.name.replace(/'/g, "\\'")}')">Reservar este presente</button>`;
+                    
+                    item.innerHTML = `
+                        <div class="gift-number">${gift.id}</div>
+                        <div class="gift-name">${gift.name}</div>
+                        ${statusHTML}
+                        ${btnHTML}
+                    `;
+                    
+                    list.appendChild(item);
+                });
+
+                container.appendChild(section);
+            });
+        }
+
+        // Funções globais
+        window.openReserveModal = function(id, name) {
+            currentGiftId = id;
+            document.getElementById('modalGiftName').textContent = name;
+            document.getElementById('guestName').value = '';
+            document.getElementById('errorMessage').classList.remove('show');
+            document.getElementById('reserveModal').classList.add('active');
+        };
+
+        window.closeModal = function() {
+            document.getElementById('reserveModal').classList.remove('active');
+        };
+
+        // Submeter formulário
+        document.getElementById('reserveForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('guestName').value.trim();
+            const errorMsg = document.getElementById('errorMessage');
+            
+            if (!name) {
+                errorMsg.textContent = 'Por favor, digite seu nome!';
+                errorMsg.classList.add('show');
+                return;
+            }
+
+            try {
+                // Verificar se ainda está disponível
+                const snapshot = await get(ref(database, `gifts/${currentGiftId}`));
+                if (snapshot.exists()) {
+                    errorMsg.textContent = 'Este presente já foi reservado por outra pessoa!';
+                    errorMsg.classList.add('show');
+                    return;
+                }
+
+                // Salvar reserva
+                await set(ref(database, `gifts/${currentGiftId}`), name);
+                window.closeModal();
+            } catch (error) {
+                console.error('Erro ao reservar:', error);
+                errorMsg.textContent = 'Erro ao reservar presente. Tente novamente!';
+                errorMsg.classList.add('show');
+            }
+        });
+
+        // Fechar modal ao clicar fora
+        document.getElementById('reserveModal').addEventListener('click', (e) => {
+            if (e.target.id === 'reserveModal') {
+                window.closeModal();
+            }
+        });
     </script>
 </body>
 </html>
